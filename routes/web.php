@@ -11,6 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () {return view('welcome');})->name('home');
+
+/*用户路由*/
+Route::resource('users', 'UsersController');
+
+/*注册界面*/
+Route::get('register', 'UsersController@create')->name('register');
+
+/*登录界面*/
+Route::get('login', 'SessionsController@create')->name('login');
+
+/*创建新会话*/
+Route::post('login', 'SessionsController@store')->name('login');
+
+/*销毁会话*/
+Route::post('logout', 'SessionsController@destroy')->name('logout');
+
+/*资源路由*/
+Route::resource('resources', 'ResourcesController');
