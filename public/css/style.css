@@ -4,6 +4,20 @@
 	font-family: "Raleway",sans-serif;
 }
 
+
+/* 模态框颜色 */
+.modal-backdrop
+{
+	background-color: rgba(255,255,255,0.1);
+}
+
+.modal-content
+{
+	// box-shadow:1px 1px 3px #A6A6A6;
+	border:none;
+}
+
+
 .pagination .active span
 {
 	border: none;

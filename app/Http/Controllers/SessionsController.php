@@ -24,7 +24,7 @@ class SessionsController extends Controller
 		{
 			$name=User::find(Auth::id())->name;
 			session()->flash('success', $name.' 欢迎回来！');
-			return redirect()->route('users.index', [Auth::user()]);
+			return redirect()->route('users.index');
 		}
 		else
 		{

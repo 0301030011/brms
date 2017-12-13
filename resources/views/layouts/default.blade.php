@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="stylesheet" href="/css/toastr.min.css">
+	<script src="/js/jquery.min.js"></script>
 </head>
 <body>
 
@@ -15,7 +16,6 @@
 @yield('content')
 
 
-<script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/toastr.min.js"></script>
 @include('layouts.messages')
