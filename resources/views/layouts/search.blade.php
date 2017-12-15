@@ -4,10 +4,10 @@
 			<div class="modal-body">
 				<form class="form-horizontal">
 					<div class="input-group">
-					  <input type="text" class="form-control" placeholder="搜索">
-					  <span class="input-group-btn">
-					    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-					  </span>
+						<input type="text" class="form-control" name="name" placeholder="搜索" value='{{ $name }}'>
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+						</span>
 					</div>
 				</form>
 			</div>

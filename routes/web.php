@@ -30,3 +30,6 @@ Route::post('logout', 'SessionsController@destroy')->name('logout');
 
 /*资源路由*/
 Route::resource('resources', 'ResourcesController');
+
+/*书籍路由*/
+Route::resource('books', 'BooksController');

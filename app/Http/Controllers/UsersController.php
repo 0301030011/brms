@@ -31,7 +31,7 @@ class UsersController extends Controller
 	/*用户列表*/
 	public function index()
 	{
-		$users=User::paginate(9);;
+		$users=User::paginate(9);
 		return view('users.index', compact('users'));
 	}
 	/*删除用户*/

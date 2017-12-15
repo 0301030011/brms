@@ -3,12 +3,12 @@
 		<div class="modal-content">
 			<div class="modal-body">
 				<h3 class="modal-title">上传资源</h3>
-				<form class="form-horizontal" style="margin-top: 20px" action="{{ route('resources.store') }}" method="POST">
+				<form class="form-horizontal" style="margin-top: 20px" action="{{ route('resources.store') }}" method="POST" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="form-group">
 						<label class="col-sm-2 control-label">文件名称:</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="name" placeholder="文件名称">
+							<input type="text" class="form-control" name="name" placeholder="文件名称" value="{{ old('name') }}">
 						</div>
 					</div>
 					<div class="form-group">
