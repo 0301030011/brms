@@ -3,9 +3,9 @@
 @section('content')
 @include('layouts.search')
 @include('resources.upload')
-<div class="col-md-offset-3 col-md-6 main">
+<div class="main">
 	<ul class="list-unstyled">
-		<li class="userlist text-center" style="font-size: 28px;cursor: pointer;" data-toggle="modal" data-target="#upload-modal">
+		<li class="userlist text-center" style="font-size: 25px;cursor: pointer;" id="upload">
 			<div>
 				<span class="glyphicon glyphicon-plus"></span>
 			</div>

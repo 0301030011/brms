@@ -10,14 +10,11 @@
 	<script src="/js/jquery.min.js"></script>
 </head>
 <body>
-
 @include('layouts.nav')
-
 @yield('content')
-
-
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/toastr.min.js"></script>
+<script src="/js/default.js"></script>
 @include('layouts.messages')
 </body>
 </html>

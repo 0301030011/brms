@@ -3,6 +3,12 @@
 {
 	font-family: "Raleway",sans-serif;
 }
+.main
+{
+	width: 960px;
+	margin:0 auto;
+	padding: 0 15px;
+}
 
 
 /* 模态框颜色 */
@@ -127,4 +133,130 @@
 	background-color: #fff;
 	box-shadow:1px 1px 3px #D6D6D6;
 	font-size: 18px;
+}
+
+/* Books index */
+.books
+{
+	height: 220px;
+	width: 150px;
+	background-size: cover;
+	box-shadow:1px 1px 5px #ACACAC;
+	border-radius: 5px;
+	float: left;
+	margin: 0 18px 40px;
+}
+
+// .books:hover>form>button
+// {
+// 	display:block;
+// }
+
+.books form
+{
+	margin-top: 35px;
+}
+
+.books form button
+{
+	margin-bottom: 15px;
+	// visibility:hidden;
+}
+
+
+
+/* Bind index */
+#add-box
+{
+	height: 830px;
+	border-radius: 5px;
+	box-shadow:1px 1px 5px #CDCDCD inset;
+	padding: 10px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.add-item
+{
+	box-shadow:1px 1px 5px #ACACAC;
+	text-align: center;
+	font-size: 15px;
+	line-height: 35px;
+	border-radius: 5px;
+	height: 35px;
+	cursor: pointer;
+}
+
+.chapter,.section
+{
+	margin-bottom: 6px;
+	float: right;
+	text-align: right;
+	padding:0 10px;
+}
+
+.chapter
+{
+	width: 710px;
+}
+
+.section
+{
+	width: 550px;
+}
+
+.panel
+{
+	margin: 0 0.5px;
+	margin-top:10px;
+	margin-left: 185px;
+}
+
+.add-chapter
+{
+	width: 215px;
+	float: right;
+}
+.add-section
+{
+	width: 165px;
+	margin: 0 10px;
+	float: right;
+}
+.add-section:after
+{
+	content: '添加节';
+}
+
+.add-chapter:after
+{
+	content: '添加章';
+}
+.trash
+{
+	background-color: #FF4D4D;
+	color:#fff;
+	border: none;
+	width: 130px;
+}
+.select td
+{
+	cursor: pointer;
+}
+
+#resources-modal .resource
+{
+	box-shadow:1px 1px 5px #CDCDCD;
+	font-size: 15px;
+	line-height: 35px;
+	border-radius: 5px;
+	height: 35px;
+	margin:10px 0;
+	padding: 0 10px;
+	cursor: pointer;
+}
+
+#resources-modal .resource .name
+{
+	width: 250px;
 }

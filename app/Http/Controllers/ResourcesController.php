@@ -11,12 +11,13 @@ class ResourcesController extends Controller
 	/*资源列表*/
 	public function index(Request $request)
 	{
-		$name=$request->name?$request->name:null;
+		$name=$request->name;
 		$resources=Resource::where('name','like','%'.$name.'%')->orderBy('created_at', 'desc')->paginate(8);
-		if (count($resources) < 1 and $name!=null)
+		/*未查询到结果*/
+		if (count($resources) < 1 and $name)
 		{
 			session()->flash('warning', '未找到名称为 '.$name.' 的资源!');
-			return back();
+			return redirect()->route('resources.index');
 		}
 		return view('resources.index',compact('resources','name'));
 	}

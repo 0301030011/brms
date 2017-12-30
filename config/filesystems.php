@@ -60,6 +60,11 @@ return [
 			'root' => storage_path('app/public/resources')
 		],
 
+		'books' => [
+			'driver' => 'local',
+			'root' => storage_path('app/public/books')
+		],
+
 		's3' => [
 			'driver' => 's3',
 			'key' => env('AWS_ACCESS_KEY_ID'),

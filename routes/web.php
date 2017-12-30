@@ -33,3 +33,6 @@ Route::resource('resources', 'ResourcesController');
 
 /*书籍路由*/
 Route::resource('books', 'BooksController');
+
+/*资源绑定*/
+Route::resource('bind', 'BindController');
