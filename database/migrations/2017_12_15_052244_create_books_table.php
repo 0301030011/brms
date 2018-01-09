@@ -19,7 +19,7 @@ class CreateBooksTable extends Migration
 			$table->string('isbn');
 			$table->string('cover_name');
 			$table->string('cover_path');
-			$table->string('menu')->nullable();
+			$table->text('menu')->nullable();
 			$table->timestamps();
 		});
 	}

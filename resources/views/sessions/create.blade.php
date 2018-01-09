@@ -22,8 +22,8 @@
 			<input type="submit" class="btn" value="登录">
 		</form>
 	</div>
-<script src="/js/jquery.min.js"></script>
-<script src="/js/toastr.min.js"></script>
+<script src="{{ URL::asset('js/jquery.min.js') }}"></script>
+<script src="{{ URL::asset('js/toastr.min.js') }}"></script>
 @include('layouts.messages')
 </body>
 </html>

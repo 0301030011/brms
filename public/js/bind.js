@@ -1,5 +1,27 @@
 $(document).ready(function() 
 {
+	~function (){
+		if ($('menu').text())
+		{
+			var menu=$.parseJSON($('menu').text());
+			for(var m=0;m<menu.length;m++)
+			{
+				var chapter=menu[m];
+				var chapterName=chapter[m];
+				$('#add-box').append('<div class="add-item chapter" itemName='+chapterName+'><p class="pull-right name">'+chapterName+'</p></div>');
+				for(var i=1;i<chapter.length;i++)
+				{
+					var section=chapter[i];
+					var sectionName=chapter[i][0];
+					var sectionResourceName=chapter[i][1];
+					var sectionResourcePath=chapter[i][2];
+					$('#add-box').append('<div class="add-item section" itemName='+sectionName+'><p class="pull-left resource" data-resourceName='+sectionResourceName+' data-resourcePath='+sectionResourcePath+'>'+sectionResourceName+'</p><p class="pull-right name">'+sectionName+'</p></div>');
+				}
+			}
+		}
+	}();
+
+
 	$(function() {
 	$("#add-box").sortable
 	({
@@ -59,7 +81,7 @@ $(document).ready(function()
 	});
 
 	/*Add chapter's or setion's name*/
-	$('#add-box').off().on('dblclick', '.section .name', function(event)
+	$('#add-box').on('dblclick', '.section .name', function(event)
 	{
 		$('#section-name').modal();
 		var that=$(this);
@@ -68,7 +90,7 @@ $(document).ready(function()
 			{
 				var name=$(this).find('input').val();
 				that.text(name);
-				that.parent().data('item_name', name);
+				that.parent().data('itemName', name);
 				$(this).find('input').val('');
 				$('#section-name').modal('hide');
 			}
@@ -80,7 +102,7 @@ $(document).ready(function()
 			return false;
 		});
 	});
-	$('#add-box').off().on('dblclick', '.chapter .name', function(event)
+	$('#add-box').on('dblclick', '.chapter .name', function(event)
 	{
 		/*Open modal*/
 		$('#chapter-name').modal();
@@ -90,7 +112,7 @@ $(document).ready(function()
 			{
 				var name=$(this).find('input').val();
 				that.text(name);
-				that.parent().data('item_name', name);
+				that.parent().data('itemName', name);
 				$(this).find('input').val('');
 				$('#chapter-name').modal('hide');
 			}
@@ -113,37 +135,67 @@ $(document).ready(function()
 			var name=$(this).find('.name').text();
 			var path=$(this).data('path');
 			that.text(name);
-			that.parent().data('resource_name', name);
-			that.parent().data('resource_path', path);
+			that.parent().data('resourceName', name);
+			that.parent().data('resourcePath', path);
 			$('#resources-modal').modal('hide');
 		});
 	});
 	/*Submit bind's data*/
-	$('#submit').on('click', function(event) {
+	$('#submit').on('click', function(event)
+	{
 		event.preventDefault();
-		var menu={};
-		var chapter=1;
-		var section=1;
+		var menu=[];
+		var chapter;
+		var section;
 		var items=$('#add-box').children();
 		for (var i = 0; i <items.length; i++)
 		{
+			if(items.eq(0).hasClass('section'))
+			{
+				toastr.error('节必须存在于章下');
+				return;
+			}
+			if(items.eq(items.length-1).hasClass('chapter'))
+			{
+				toastr.error('不能含有空章节');
+				return;
+			}
 			var item=items.eq(i);
+			if (item.data('itemName')==null)
+			{
+				toastr.error('请完善目录');
+				return;
+			}
 			if (item.hasClass('chapter'))
 			{
-				eval("menu.chapter"+chapter+"=item.data('item_name');");
+				chapter=[];
+				chapter.push(item.data('itemName'));
+				if (item.next().hasClass('chapter'))
+				{
+					toastr.error('不能含有空章节');
+				}
 			}
 			if (item.hasClass('section'))
 			{
-				eval();
-				menu.chapter1.section1.name=item.find('p').text();
-				section++;
-				if (item.next().hasClass('chapter'))
+				section=[];
+				section.push(item.data('itemName'));
+				section.push(item.data('resourceName'));
+				section.push(item.data('resourcePath'));
+				chapter.push(section);
+				if (item.next().hasClass('chapter')||i==items.length-1)
 				{
-					chapter++;
-					section=0;
+					menu.push(chapter);
 				}
 			}
-			alert(JSON.stringify(menu));
 		}
+		var url=window.location.href.slice(0,-5);
+		$.ajax({
+			type: 'POST',
+			url: url,
+			data: {_method: 'PUT',menu:menu},
+			success: function (data) {toastr.success('保存成功!');},
+			headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
+			dataType:"JSON"
+		});
 	});
 });
