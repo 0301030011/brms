@@ -12,14 +12,28 @@ class ResourcesController extends Controller
 	public function index(Request $request)
 	{
 		$name=$request->name;
-		$resources=Resource::where('name','like','%'.$name.'%')->orderBy('created_at', 'desc')->paginate(8);
-		/*未查询到结果*/
-		if (count($resources) < 1 and $name)
+		if ($request->has('ajax'))
 		{
-			session()->flash('warning', '未找到名称为 '.$name.' 的资源!');
-			return redirect()->route('resources.index');
+			$resources=Resource::where('name','like','%'.$name.'%')->orderBy('created_at', 'desc')->paginate(16);
+			/*未查询到结果*/
+			// if (count($resources) < 1 and $name)
+			// {
+			// 	session()->flash('warning', '未找到名称为 '.$name.' 的资源!');
+			// 	return redirect()->route('resources.index');
+			// }
+			return $resources;
 		}
-		return view('resources.index',compact('resources','name'));
+		else
+		{
+			$resources=Resource::where('name','like','%'.$name.'%')->orderBy('created_at', 'desc')->paginate(8);
+			/*未查询到结果*/
+			if (count($resources) < 1 and $name)
+			{
+				session()->flash('warning', '未找到名称为 '.$name.' 的资源!');
+				return redirect()->route('resources.index');
+			}
+			return view('resources.index',compact('resources','name'));
+		}
 	}
 
 	/*储存资源*/

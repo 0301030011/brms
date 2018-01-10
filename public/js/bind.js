@@ -1,26 +1,25 @@
 $(document).ready(function() 
 {
 	~function (){
-		if ($('menu').text())
+		if ($('menu').text()!=''&&$('menu').text()!='null')
 		{
 			var menu=$.parseJSON($('menu').text());
 			for(var m=0;m<menu.length;m++)
 			{
 				var chapter=menu[m];
-				var chapterName=chapter[m];
-				$('#add-box').append('<div class="add-item chapter" itemName='+chapterName+'><p class="pull-right name">'+chapterName+'</p></div>');
+				var chapterName=chapter[0];
+				$('#add-box').append('<div class="add-item chapter" data-itemname='+chapterName+'><p class="pull-right name">'+chapterName+'</p></div>');
 				for(var i=1;i<chapter.length;i++)
 				{
 					var section=chapter[i];
 					var sectionName=chapter[i][0];
 					var sectionResourceName=chapter[i][1];
 					var sectionResourcePath=chapter[i][2];
-					$('#add-box').append('<div class="add-item section" itemName='+sectionName+'><p class="pull-left resource" data-resourceName='+sectionResourceName+' data-resourcePath='+sectionResourcePath+'>'+sectionResourceName+'</p><p class="pull-right name">'+sectionName+'</p></div>');
+					$('#add-box').append('<div class="add-item section" data-itemname='+sectionName+'><p class="pull-left resource" data-resourcename='+sectionResourceName+' data-resourcepath='+sectionResourcePath+'>'+sectionResourceName+'</p><p class="pull-right name">'+sectionName+'</p></div>');
 				}
 			}
 		}
 	}();
-
 
 	$(function() {
 	$("#add-box").sortable
@@ -90,7 +89,7 @@ $(document).ready(function()
 			{
 				var name=$(this).find('input').val();
 				that.text(name);
-				that.parent().data('itemName', name);
+				that.parent().data('itemname', name);
 				$(this).find('input').val('');
 				$('#section-name').modal('hide');
 			}
@@ -112,7 +111,7 @@ $(document).ready(function()
 			{
 				var name=$(this).find('input').val();
 				that.text(name);
-				that.parent().data('itemName', name);
+				that.parent().data('itemname', name);
 				$(this).find('input').val('');
 				$('#chapter-name').modal('hide');
 			}
@@ -129,17 +128,34 @@ $(document).ready(function()
 	$('#add-box').on('dblclick', '.section .resource', function(event)
 	{
 		$('#resources-modal').modal();
+		var url="http://"+window.location.host+"/brms/public/resources";
+		$.ajax({
+			url: url,
+			data: {ajax:true},
+			success: function (data)
+			{
+				$('#resources').empty();
+				var resources=data.data;
+				for(var i=0;i<resources.length;i++)
+				{
+					var resource=resources[i];
+					$('#resources').append('<div class="resource" data-path="'+resource.path+'"><div class="name pull-left">'+resource.name+'</div><div class="type pull-left" >'+resource.type+'</div><div class="date pull-right">'+resource.updated_at+'</div></div>');
+				}
+			},
+			dataType:"JSON"
+		});
 		var that=$(this);
-		$('#resources-modal').on('click', '.resource', function(event)
+		$('#resources-modal').off().on('click', '.resource', function(event)
 		{
 			var name=$(this).find('.name').text();
 			var path=$(this).data('path');
 			that.text(name);
-			that.parent().data('resourceName', name);
-			that.parent().data('resourcePath', path);
+			that.parent().data('resourcename', name);
+			that.parent().data('resourcepath', path);
 			$('#resources-modal').modal('hide');
 		});
 	});
+
 	/*Submit bind's data*/
 	$('#submit').on('click', function(event)
 	{
@@ -161,7 +177,7 @@ $(document).ready(function()
 				return;
 			}
 			var item=items.eq(i);
-			if (item.data('itemName')==null)
+			if (item.data('itemname')==null)
 			{
 				toastr.error('请完善目录');
 				return;
@@ -169,7 +185,7 @@ $(document).ready(function()
 			if (item.hasClass('chapter'))
 			{
 				chapter=[];
-				chapter.push(item.data('itemName'));
+				chapter.push(item.data('itemname'));
 				if (item.next().hasClass('chapter'))
 				{
 					toastr.error('不能含有空章节');
@@ -178,9 +194,9 @@ $(document).ready(function()
 			if (item.hasClass('section'))
 			{
 				section=[];
-				section.push(item.data('itemName'));
-				section.push(item.data('resourceName'));
-				section.push(item.data('resourcePath'));
+				section.push(item.data('itemname'));
+				section.push(item.data('resourcename'));
+				section.push(item.data('resourcepath'));
 				chapter.push(section);
 				if (item.next().hasClass('chapter')||i==items.length-1)
 				{
@@ -195,7 +211,38 @@ $(document).ready(function()
 			data: {_method: 'PUT',menu:menu},
 			success: function (data) {toastr.success('保存成功!');},
 			headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
-			dataType:"JSON"
 		});
 	});
+
+	/*Search resources*/
+	$('#search').off().submit(function(event) {
+		if ($(this).find('input').val().length!='')
+		{
+			var url="http://"+window.location.host+"/brms/public/resources";
+			var name=$(this).find('input').val();
+			$.ajax({
+				url: url,
+				data: {name:name,ajax:true},
+				success: function (data)
+				{
+					$('#resources').empty();
+					var resources=data.data;
+					for(var i=0;i<resources.length;i++)
+					{
+						var resource=resources[i];
+						$('#resources').append('<div class="resource" data-path="'+resource.path+'"><div class="name pull-left">'+resource.name+'</div><div class="type pull-left" >'+resource.type+'</div><div class="date pull-right">'+resource.updated_at+'</div></div>');
+					}
+				},
+				dataType:"JSON"
+			});
+		}
+		else
+		{
+			$('#resources-modal').modal('hide');
+		}
+		return false;
+	});
+
+	/**/
+
 });
