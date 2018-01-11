@@ -36,3 +36,6 @@ Route::resource('books', 'BooksController');
 
 /*资源绑定*/
 Route::resource('bind', 'BindController');
+
+/*Create QRcode and zip file*/
+Route::post('qrcode/zip','QrcodesController@zip');

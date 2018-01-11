@@ -1,5 +1,6 @@
 $(document).ready(function() 
 {
+	/*Load menu*/
 	~function (){
 		if ($('menu').text()!=''&&$('menu').text()!='null')
 		{
@@ -21,6 +22,7 @@ $(document).ready(function()
 		}
 	}();
 
+	/*Drag to add chapter and section*/
 	$(function() {
 	$("#add-box").sortable
 	({
@@ -51,6 +53,9 @@ $(document).ready(function()
 			}
 		},
 	}).disableSelection();
+
+
+	/*Remove item*/
 	$("#trash").sortable
 	({
 		cursor: "move",
@@ -60,7 +65,6 @@ $(document).ready(function()
 		}
 	}).disableSelection();
 	});
-
 	$('.panel').on('click', '.trash', function(event) {
 		event.preventDefault();
 		if (confirm("确定要清空此书的资源列表吗？"))
@@ -69,7 +73,7 @@ $(document).ready(function()
 		}
 	});
 
-	/*Click to add item*/
+	/*Click to add chapter and section*/
 	$('.panel').on('click', '.add-chapter', function(event) {
 		event.preventDefault();
 		$('#add-box').append('<div class="add-item chapter"><p class="pull-right name">双击输入章名称</p></div>');
@@ -242,7 +246,5 @@ $(document).ready(function()
 		}
 		return false;
 	});
-
-	/**/
 
 });

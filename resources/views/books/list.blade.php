@@ -4,8 +4,8 @@
 			{{ csrf_field() }}
 			{{ method_field('DELETE') }}
 			<a href="{{ route('bind.edit', $book->id) }}"><button type="button" class="btn btn-primary center-block">编辑</button></a>
-			<a href=""><button type="button" class="btn btn-success center-block">查看</button></a>
-			<button class="btn btn-danger center-block">删除</button>
+			<button type="button" data-id="{{ $book->id }}" class="btn btn-success center-block download">生成</button>
+			<button type="submit" class="btn btn-danger center-block">删除</button>
 		</form>
 	</div>
 @endforeach
