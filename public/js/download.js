@@ -1,7 +1,7 @@
 $('.download').on('click', function(event) {
 	event.preventDefault();
 	/* Act on the event */
-	$('#download-modal').modal();
+	// $('#download-modal').modal();
 	id=$(this).data('id');
 	var url="http://"+window.location.host+"/brms/public/qrcode/zip";
 	$.ajax({
