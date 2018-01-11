@@ -9,14 +9,14 @@ $(document).ready(function()
 			{
 				var chapter=menu[m];
 				var chapterName=chapter[0];
-				$('#add-box').append('<div class="add-item chapter" data-itemname='+chapterName+'><p class="pull-right name">'+chapterName+'</p></div>');
+				$('#add-box').append('<div class="add-item chapter" itemname='+chapterName+'><p class="pull-right name">'+chapterName+'</p></div>');
 				for(var i=1;i<chapter.length;i++)
 				{
 					var section=chapter[i];
 					var sectionName=chapter[i][0];
 					var sectionResourceName=chapter[i][1];
 					var sectionResourcePath=chapter[i][2];
-					$('#add-box').append('<div class="add-item section" data-itemname='+sectionName+'><p class="pull-left resource" data-resourcename='+sectionResourceName+' data-resourcepath='+sectionResourcePath+'>'+sectionResourceName+'</p><p class="pull-right name">'+sectionName+'</p></div>');
+					$('#add-box').append('<div class="add-item section" itemname='+sectionName+' resourcename='+sectionResourceName+' resourcepath='+sectionResourcePath+'><p class="pull-left resource">'+sectionResourceName+'</p><p class="pull-right name">'+sectionName+'</p></div>');
 				}
 			}
 		}
@@ -93,7 +93,7 @@ $(document).ready(function()
 			{
 				var name=$(this).find('input').val();
 				that.text(name);
-				that.parent().data('itemname', name);
+				that.parent().attr('itemname', name);
 				$(this).find('input').val('');
 				$('#section-name').modal('hide');
 			}
@@ -115,7 +115,7 @@ $(document).ready(function()
 			{
 				var name=$(this).find('input').val();
 				that.text(name);
-				that.parent().data('itemname', name);
+				that.parent().attr('itemname', name);
 				$(this).find('input').val('');
 				$('#chapter-name').modal('hide');
 			}
@@ -143,7 +143,7 @@ $(document).ready(function()
 				for(var i=0;i<resources.length;i++)
 				{
 					var resource=resources[i];
-					$('#resources').append('<div class="resource" data-path="'+resource.path+'"><div class="name pull-left">'+resource.name+'</div><div class="type pull-left" >'+resource.type+'</div><div class="date pull-right">'+resource.updated_at+'</div></div>');
+					$('#resources').append('<div class="resource" path="'+resource.path+'"><div class="name pull-left">'+resource.name+'</div><div class="type pull-left" >'+resource.type+'</div><div class="date pull-right">'+resource.updated_at+'</div></div>');
 				}
 			},
 			dataType:"JSON"
@@ -152,10 +152,10 @@ $(document).ready(function()
 		$('#resources-modal').off().on('click', '.resource', function(event)
 		{
 			var name=$(this).find('.name').text();
-			var path=$(this).data('path');
+			var path=$(this).attr('path');
 			that.text(name);
-			that.parent().data('resourcename', name);
-			that.parent().data('resourcepath', path);
+			that.parent().attr('resourcename', name);
+			that.parent().attr('resourcepath', path);
 			$('#resources-modal').modal('hide');
 		});
 	});
@@ -181,7 +181,7 @@ $(document).ready(function()
 				return;
 			}
 			var item=items.eq(i);
-			if (item.data('itemname')==null)
+			if (item.attr('itemname')==null)
 			{
 				toastr.error('请完善目录');
 				return;
@@ -189,7 +189,7 @@ $(document).ready(function()
 			if (item.hasClass('chapter'))
 			{
 				chapter=[];
-				chapter.push(item.data('itemname'));
+				chapter.push(item.attr('itemname'));
 				if (item.next().hasClass('chapter'))
 				{
 					toastr.error('不能含有空章节');
@@ -198,9 +198,9 @@ $(document).ready(function()
 			if (item.hasClass('section'))
 			{
 				section=[];
-				section.push(item.data('itemname'));
-				section.push(item.data('resourcename'));
-				section.push(item.data('resourcepath'));
+				section.push(item.attr('itemname'));
+				section.push(item.attr('resourcename'));
+				section.push(item.attr('resourcepath'));
 				chapter.push(section);
 				if (item.next().hasClass('chapter')||i==items.length-1)
 				{
@@ -234,7 +234,7 @@ $(document).ready(function()
 					for(var i=0;i<resources.length;i++)
 					{
 						var resource=resources[i];
-						$('#resources').append('<div class="resource" data-path="'+resource.path+'"><div class="name pull-left">'+resource.name+'</div><div class="type pull-left" >'+resource.type+'</div><div class="date pull-right">'+resource.updated_at+'</div></div>');
+						$('#resources').append('<div class="resource" path="'+resource.path+'"><div class="name pull-left">'+resource.name+'</div><div class="type pull-left" >'+resource.type+'</div><div class="date pull-right">'+resource.updated_at+'</div></div>');
 					}
 				},
 				dataType:"JSON"
