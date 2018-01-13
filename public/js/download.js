@@ -3,7 +3,7 @@ $('.download').on('click', function(event) {
 	/* Act on the event */
 	// $('#download-modal').modal();
 	id=$(this).data('id');
-	var url="http://"+window.location.host+"/brms/public/qrcode/zip";
+	var url="http://"+window.location.host+"/brms/public/qrcode/create";
 	$.ajax({
 		type: 'POST',
 		url: url,

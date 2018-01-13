@@ -38,4 +38,4 @@ Route::resource('books', 'BooksController');
 Route::resource('bind', 'BindController');
 
 /*Create QRcode and zip file*/
-Route::post('qrcode/zip','QrcodesController@zip');
+Route::post('qrcode/create','QrcodesController@create');
