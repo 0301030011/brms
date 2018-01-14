@@ -39,3 +39,6 @@ Route::resource('bind', 'BindController');
 
 /*Create QRcode and zip file*/
 Route::post('qrcode/create','QrcodesController@create');
+
+/*Mobile view*/
+Route::resource('mobile', 'MobileContoller');
