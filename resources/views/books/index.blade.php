@@ -5,7 +5,7 @@
 @include('layouts.search')
 @include('books.download')
 @include('books.upload')
-	<div class="main">
+	<div id="main">
 		<div class="books" style="font-size: 25px;cursor: pointer;text-align: center;line-height: 220px;" id="upload">
 			<span class="glyphicon glyphicon-plus"></span>
 		</div>

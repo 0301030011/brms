@@ -23,53 +23,60 @@ $(document).ready(function()
 	}();
 
 	/*Drag to add chapter and section*/
-	$(function() {
-	$("#add-box").sortable
-	({
-		connectWith: "#trash",
-		cursor: "move"
-	}).disableSelection();
-	$("#add-panel").sortable
-	({
-		connectWith: "#add-box",
-		cursor: "move",
-		scroll: false,
-		items: "div:not(.disabled)",
-		remove: function(event, ui)
-		{
-			if (ui.item.hasClass('add-section'))
+	$(function()
+	{
+		$("#add-box").sortable
+		({
+			connectWith: "#trash",
+			cursor: "move",
+			update: function( event, ui )
 			{
-				ui.item.removeClass();
-				ui.item.addClass('add-item section');
-				ui.item.append('<p class="pull-left resource">双击选择资源</p><p class="pull-right name">双击输入节名称</p>');
-				$('.add-chapter').after('<div class="add-item add-section"></div>');
+				leaving();
 			}
-			if (ui.item.hasClass('add-chapter'))
+		}).disableSelection();
+		$("#add-panel").sortable
+		({
+			connectWith: "#add-box",
+			cursor: "move",
+			scroll: false,
+			items: "div:not(.disabled)",
+			remove: function(event, ui)
 			{
-				ui.item.removeClass();
-				ui.item.addClass('add-item chapter');
-				ui.item.append('<p class="pull-right name">双击输入章名称</p>');
-				$('.add-section').before('<div class="add-item add-chapter"></div>');
+				if (ui.item.hasClass('add-section'))
+				{
+					ui.item.removeClass();
+					ui.item.addClass('add-item section');
+					ui.item.append('<p class="pull-left resource">双击选择资源</p><p class="pull-right name">双击输入节名称</p>');
+					$('.add-chapter').after('<div class="add-item add-section"></div>');
+				}
+				if (ui.item.hasClass('add-chapter'))
+				{
+					ui.item.removeClass();
+					ui.item.addClass('add-item chapter');
+					ui.item.append('<p class="pull-right name">双击输入章名称</p>');
+					$('.add-section').before('<div class="add-item add-chapter"></div>');
+				}
+			},
+		}).disableSelection();
+		/*Remove item*/
+		$("#trash").sortable
+		({
+			cursor: "move",
+			receive: function( event, ui )
+			{
+				ui.item.remove();
 			}
-		},
-	}).disableSelection();
-
-
-	/*Remove item*/
-	$("#trash").sortable
-	({
-		cursor: "move",
-		receive: function( event, ui )
-		{
-			ui.item.remove();
-		}
-	}).disableSelection();
+		}).disableSelection();
 	});
-	$('.panel').on('click', '.trash', function(event) {
+
+
+	$('.panel').on('click', '.trash', function(event)
+	{
 		event.preventDefault();
 		if (confirm("确定要清空此书的资源列表吗？"))
 		{
 			$('#add-box').empty();
+			leaving();
 		}
 	});
 
@@ -88,7 +95,8 @@ $(document).ready(function()
 	{
 		$('#section-name').modal();
 		var that=$(this);
-		$('#section-name form').off().submit(function(event) {
+		$('#section-name form').off().submit(function(event)
+		{
 			if ($(this).find('input').val().length!='')
 			{
 				var name=$(this).find('input').val();
@@ -102,6 +110,7 @@ $(document).ready(function()
 				that.text('双击输入节名称');
 				$('#section-name').modal('hide');
 			}
+			leaving();
 			return false;
 		});
 	});
@@ -110,7 +119,8 @@ $(document).ready(function()
 		/*Open modal*/
 		$('#chapter-name').modal();
 		var that=$(this);
-		$('#chapter-name form').off().submit(function(event) {
+		$('#chapter-name form').off().submit(function(event)
+		{
 			if ($(this).find('input').val().length!='')
 			{
 				var name=$(this).find('input').val();
@@ -124,6 +134,7 @@ $(document).ready(function()
 				that.text('双击输入章名称');
 				$('#chapter-name').modal('hide');
 			}
+			leaving();
 			return false;
 		});
 	});
@@ -157,6 +168,7 @@ $(document).ready(function()
 			that.parent().attr('resourcename', name);
 			that.parent().attr('resourcepath', path);
 			$('#resources-modal').modal('hide');
+			leaving();
 		});
 	});
 
@@ -216,6 +228,7 @@ $(document).ready(function()
 			success: function (data) {toastr.success('保存成功!');},
 			headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')},
 		});
+		$(window).unbind('beforeunload');
 	});
 
 	/*Search resources*/
@@ -247,4 +260,10 @@ $(document).ready(function()
 		return false;
 	});
 
+	function leaving(argument) {
+		$(window).bind('beforeunload',function()
+		{
+			return '您输入的内容尚未保存，确定离开此页面吗？';
+		});
+	}
 });

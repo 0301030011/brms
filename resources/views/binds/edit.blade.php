@@ -6,7 +6,7 @@
 @include('binds.section_name')
 @include('binds.resources')
 	<menu style="display: none;">{{ $book->menu }}</menu>
-	<div class="main">
+	<div id="main">
 		<div class="pull-left">
 			<div class="books" style="clear: both;margin-bottom: 10px;background-image:url({{ $book->cover_path }});">
 {{-- 				<form action="{{ route('books.destroy',$book->id) }}" method="POST">

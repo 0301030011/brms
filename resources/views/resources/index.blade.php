@@ -3,7 +3,7 @@
 @section('content')
 @include('layouts.search')
 @include('resources.upload')
-<div class="main">
+<div id="main">
 	<ul class="list-unstyled">
 		<li class="userlist text-center" style="font-size: 25px;cursor: pointer;" id="upload">
 			<div>

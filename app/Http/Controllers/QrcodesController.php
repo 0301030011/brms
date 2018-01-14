@@ -7,6 +7,7 @@ use App\Book;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Chumper\Zipper\Zipper;
 use Storage;
+use URL;
 
 class QrcodesController extends Controller
 {
@@ -15,7 +16,6 @@ class QrcodesController extends Controller
 		$id=intval($request->id);
 		$book=Book::find($id);
 		$menu=json_decode($book->menu);
-		$filelist=[];
 		foreach ($menu as $value)
 		{
 			for ($i=1; $i < count($value); $i++)
@@ -24,11 +24,13 @@ class QrcodesController extends Controller
 				$sectionname=$value[$i][0];
 				$sectionresourcename=$value[$i][1];
 				$sectionresourcepath=$value[$i][2];
+				// Change can use to review in livingview
 				QrCode::size(200)->generate($sectionresourcepath, public_path('storage/qrcodes/'.$sectionname.'.svg'));
 				$filelist[]=$sectionname.'.svg';
 			}
 		}
 		$zipper->make(public_path().'/storage/download/'.$book->isbn.'.zip')->folder($book->isbn)->add(public_path().'/storage/qrcodes/')->close();
 		Storage::disk('qrcodes')->delete($filelist);
+		return ['url'=>asset('/storage/download/'.$book->isbn.'.zip')];
 	}
 }

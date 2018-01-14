@@ -3,7 +3,7 @@
 @section('title','帐号管理')
 
 @section('content')
-	<div class="main">
+	<div id="main">
 		@include('users.list')
 		<div class="pages">
 			{!! $users->render() !!}
