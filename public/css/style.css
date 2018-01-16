@@ -10,6 +10,15 @@
 	padding: 0 15px;
 }
 
+.btn-primary
+{
+	background: #3498DB;
+}
+
+.btn-danger
+{
+	background: #FF4D4D;
+}
 
 /* 模态框颜色 */
 .modal-backdrop
@@ -147,10 +156,10 @@
 	margin: 0 18px 40px;
 }
 
-// .books:hover>form>button
-// {
-// 	display:block;
-// }
+.books:hover>form>button
+{
+	display:block;
+}
 
 .books form
 {
@@ -160,7 +169,7 @@
 .books form button
 {
 	margin-bottom: 15px;
-	// visibility:hidden;
+	display:none;
 }
 
 

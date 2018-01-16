@@ -8,6 +8,13 @@ use App\User;
 
 class SessionsController extends Controller
 {
+	public function __construct()
+	{
+		$this->middleware('auth', [
+			'except' => ['create', 'store']
+		]);
+	}
+
 	/*登录界面*/
 	public function create()
 	{
@@ -22,7 +29,7 @@ class SessionsController extends Controller
 		]);
 		if (Auth::attempt($credentials))
 		{
-			$name=User::find(Auth::id())->name;
+			$name=Auth::user()->name;
 			session()->flash('success', $name.' 欢迎回来！');
 			return redirect()->route('users.index');
 		}
@@ -31,5 +38,12 @@ class SessionsController extends Controller
 			session()->flash('error', '很抱歉，您的邮箱和密码不匹配');
 			return redirect()->back();
 		}
+	}
+
+	public function destroy()
+	{
+		session()->flash('success', Auth::user()->name.' 已成功退出！');
+	    Auth::logout();
+	    return redirect('login');
 	}
 }

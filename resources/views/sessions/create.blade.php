@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>登录</title>
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/css/toastr.min.css">
+	<link rel="stylesheet" href="{{ URL::asset('/css/style.css') }}">
+	<link rel="stylesheet" href="{{ URL::asset('/css/toastr.min.css') }}">
 </head>
 <body>
 	<div id="login">

@@ -2,20 +2,14 @@
 @section('title','图书编辑')
 
 @section('content')
-@include('binds.chapter_name')
-@include('binds.section_name')
-@include('binds.resources')
+@include('books.chapter_name')
+@include('books.section_name')
+@include('books.update')
+@include('books.resources')
 	<menu style="display: none;">{{ $book->menu }}</menu>
 	<div id="main">
 		<div class="pull-left">
-			<div class="books" style="clear: both;margin-bottom: 10px;background-image:url({{ $book->cover_path }});">
-{{-- 				<form action="{{ route('books.destroy',$book->id) }}" method="POST">
-					{{ csrf_field() }}
-					{{ method_field('DELETE') }}
-					<a href="{{ route('bind.edit', $book->id) }}"><button type="button" class="btn btn-primary center-block">编辑</button></a>
-					<a href=""><button type="button" class="btn btn-success center-block">查看</button></a>
-					<button class="btn btn-danger center-block">删除</button>
-				</form> --}}
+			<div class="books" style="cursor: pointer;clear: both;margin-bottom: 10px;background-image:url({{ $book->cover_path }});">
 			</div>
 			<button class="add-item btn-primary" style="width: 150px; display: block; margin-left: 18px;border: none;" id="submit">保存</button>
 		</div>
@@ -33,6 +27,5 @@
 		</div>
 	</div>
 	<script src="{{ URL::asset('/js/jquery-ui.min.js') }}"></script>
-	<script src="{{ URL::asset('/js/session.js') }}"></script>
 	<script src="{{ URL::asset('/js/bind.js') }}"></script>
 @stop

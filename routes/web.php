@@ -26,7 +26,7 @@ Route::get('login', 'SessionsController@create')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
 
 /*销毁会话*/
-Route::post('logout', 'SessionsController@destroy')->name('logout');
+Route::get('logout', 'SessionsController@destroy')->name('logout');
 
 /*资源路由*/
 Route::resource('resources', 'ResourcesController');
@@ -34,11 +34,8 @@ Route::resource('resources', 'ResourcesController');
 /*书籍路由*/
 Route::resource('books', 'BooksController');
 
-/*资源绑定*/
-Route::resource('bind', 'BindController');
-
 /*Create QRcode and zip file*/
 Route::post('qrcode/create','QrcodesController@create');
 
 /*Mobile view*/
-Route::resource('mobile', 'MobileContoller');
+Route::resource('book', 'BookContoller');

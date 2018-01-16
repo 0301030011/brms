@@ -7,6 +7,12 @@ use App\User;
 
 class UsersController extends Controller
 {
+	public function __construct()
+	{
+		$this->middleware('auth', [
+			'except' => ['create', 'store']
+		]);
+	}
 
 	/*注册界面*/
 	public function create()

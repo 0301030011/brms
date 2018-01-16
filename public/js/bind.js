@@ -103,13 +103,12 @@ $(document).ready(function()
 				that.text(name);
 				that.parent().attr('itemname', name);
 				$(this).find('input').val('');
-				$('#section-name').modal('hide');
 			}
 			else
 			{
 				that.text('双击输入节名称');
-				$('#section-name').modal('hide');
 			}
+			$('#section-name').modal('hide');
 			leaving();
 			return false;
 		});
@@ -127,13 +126,12 @@ $(document).ready(function()
 				that.text(name);
 				that.parent().attr('itemname', name);
 				$(this).find('input').val('');
-				$('#chapter-name').modal('hide');
 			}
 			else
 			{
 				that.text('双击输入章名称');
-				$('#chapter-name').modal('hide');
 			}
+			$('#chapter-name').modal('hide');
 			leaving();
 			return false;
 		});
@@ -169,6 +167,18 @@ $(document).ready(function()
 			that.parent().attr('resourcepath', path);
 			$('#resources-modal').modal('hide');
 			leaving();
+		});
+	});
+
+	/*Change books info*/
+	$('.books').on('click', function(event)
+	{
+		event.preventDefault();
+		$('#update-modal').modal();
+		var that=$(this);
+		$('#update-modal form').off().submit(function(event)
+		{
+			$('#update-modal').modal('hide');
 		});
 	});
 

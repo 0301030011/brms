@@ -4,11 +4,11 @@
 			<div class="username pull-left">{{ $user->name }}</div>
 			<div class="useremail pull-left">{{ $user->email }}</div>
 			<div class="pull-right">
-				<form action="{{ route('users.update',$user->id) }}" method="POST" style="display: inline;">
+{{-- 				<form action="{{ route('users.update',$user->id) }}" method="POST" style="display: inline;">
 					{{ csrf_field() }}
 					{{ method_field('PATCH') }}
 					<button type="submit" class="btn btn-m btn-success per-btn">已审核</button>
-				</form>
+				</form> --}}
 				<form action="{{ route('users.destroy',$user->id) }}" method="POST" style="display: inline;">
 					{{ csrf_field() }}
 					{{ method_field('DELETE') }}

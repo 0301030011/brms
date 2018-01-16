@@ -42,6 +42,8 @@ class ResourcesController extends Controller
 		$this->validate($request,[
 			'name'=>'required',
 			'resource'=>'required|file'
+		],[
+			'resource.required'=>'资源 不能为空'
 		]);
 		$file=$request->resource;
 		$name=$request->name;
