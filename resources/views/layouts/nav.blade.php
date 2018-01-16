@@ -12,8 +12,8 @@
 				<li><a href="{{ route('resources.index') }}"><span class="glyphicon glyphicon-th"></span> 资源列表</a></li>
 				{{-- <li><a ><span class="glyphicon glyphicon-comment"></span> 反馈中心</a></li> --}}
 				<li><a href="{{ route('users.index') }}"><span class="glyphicon glyphicon-user"></span> 管理员帐号管理</a></li>
-				<li id="user"><a>{{ Auth::user()->name }}</a></li>
-				<li id="logout" style="display: none;"><a href="{{ route('logout',Auth::id()) }}" style="color: #FF4D4D">登出</a></li>
+				<li id="user" style="cursor:pointer;display: inline-block;width:100px;text-align: center;"><a>{{ Auth::user()->name }}</a></li>
+				<li id="logout" style="display: none;cursor:pointer;width:100px;text-align: center;"><a href="{{ route('logout',Auth::id()) }}" style="color: #FF4D4D">登出</a></li>
 			</ul>
 		</div>
 	</div>

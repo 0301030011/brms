@@ -41,20 +41,19 @@ class ResourcesController extends Controller
 	{
 		$this->validate($request,[
 			'name'=>'required',
-			'resource'=>'required|file'
+			'resource'=>'required|file|mimes:doc,word,pdf,docx,ppt'
 		],[
-			'resource.required'=>'资源 不能为空'
+			'resource.required'=>'资源 不能为空',
+			'resources.mimes'=>'资源 必须是一个 doc, word, pdf, docx, ppt 类型的文件。',
 		]);
 		$file=$request->resource;
 		$name=$request->name;
-		/*获取文件类型*/
-		$type = $file->getClientMimeType(); 
 		/*获取文件扩展名*/
-		$extension=$file->getClientOriginalExtension();
+		$type=$file->getClientOriginalExtension();
 		/*获取临时文件的绝对路径*/
 		$real_path = $file->getRealPath();
 		/*储存文件的名字*/
-		$file_name = date('Y-m-d-H-i-s') . '-' . uniqid() . '.' . $extension;
+		$file_name = date('Y-m-d-H-i-s') . '-' . uniqid() . '.' . $type;
 		/*储存文件*/
 		Storage::disk('resources')->put($file_name, file_get_contents($real_path));
 		/*获取文件路径*/

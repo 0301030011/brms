@@ -1,5 +1,5 @@
 <div class="modal fade" id="resources-modal" tabindex="-1">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body">
 				<h3 class="modal-title">添加资源</h3>

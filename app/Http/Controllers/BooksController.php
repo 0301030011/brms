@@ -26,13 +26,14 @@ class BooksController extends Controller
 		$book=$this->validate($request,[
 				'name'=>'required',
 				'isbn'=>'required',
-				'cover'=>'required',
+				'cover'=>'required|mimes:jpeg,jpg,png',
 				// 使用 regex 模式时，规则必须放在数组中，而不能使用管道分隔符，尤其是正则表达式中已经使用了管道符号时
 				'isbn'=> array('regex:/\b(?:ISBN(?:: ?| ))?((?:97[89])?\d{9}[\dx])\b/i'),
 		],[
-			'isbn.required'=>'ISBN 不能为空',
-			'isbn.regex'=>'ISBN 格式有误',
-			'cover.required'=>'封面 不能为空',
+			'isbn.required'=>'ISBN 不能为空。',
+			'isbn.regex'=>'ISBN 格式有误。',
+			'cover.required'=>'封面 不能为空。',
+			'cover.mimes'=>'封面 必须是一个 jpeg, jpg, png 类型的文件。',
 		]);
 		extract($book);
 		/*获取扩展名*/
@@ -61,7 +62,7 @@ class BooksController extends Controller
 				// 使用 regex 模式时，规则必须放在数组中，而不能使用管道分隔符，尤其是正则表达式中已经使用了管道符号时
 				'isbn'=> array('regex:/\b(?:ISBN(?:: ?| ))?((?:97[89])?\d{9}[\dx])\b/i'),
 		],[
-			'isbn.regex'=>'ISBN 格式有误',
+			'isbn.regex'=>'ISBN 格式有误。',
 		]);
 		if ($request->has('menu'))
 		{

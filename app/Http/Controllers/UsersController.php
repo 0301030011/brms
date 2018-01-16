@@ -32,7 +32,8 @@ class UsersController extends Controller
 			'email'=>$request->email,
 			'password'=>bcrypt($request->password)
 		]);
-		return redirect()->back();
+		session()->flash('success', '您以注册成功请等待管理员审核通过');
+		return redirect('login');
 	}
 	/*用户列表*/
 	public function index()

@@ -158,7 +158,7 @@ $(document).ready(function()
 			dataType:"JSON"
 		});
 		var that=$(this);
-		$('#resources-modal').off().on('click', '.resource', function(event)
+		$('#resources-modal .modal-body').off().on('click', '.resource', function(event)
 		{
 			var name=$(this).find('.name').text();
 			var path=$(this).attr('path');
