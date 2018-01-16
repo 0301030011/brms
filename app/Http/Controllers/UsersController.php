@@ -48,4 +48,22 @@ class UsersController extends Controller
 		session()->flash('success', '用户 '.$user->name.' 删除成功!');
 		return back();
 	}
+
+	/*Upadte user*/
+	public function update(User $user)
+	{
+		if ($user->status==0)
+		{
+			$user->status=1;
+			$user->save();
+			session()->flash('success', '用户 '.$user->name.' 审核通过!');
+		}
+		else
+		{
+			$user->status=0;
+			$user->save();
+			session()->flash('success', '用户 '.$user->name.' 审核未通过!');
+		}
+		return back();
+	}
 }

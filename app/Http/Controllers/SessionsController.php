@@ -27,22 +27,23 @@ class SessionsController extends Controller
 			'email'=>'required|email',
 			'password'=>'required'
 		]);
-		if (User::where('email',$request->email)->first()->status==1)
+		if (Auth::attempt($credentials))
 		{
-			if (Auth::attempt($credentials))
+			if (User::where('email',$request->email)->first()->status==1)
 			{
 				$name=Auth::user()->name;
 				session()->flash('success', $name.' 欢迎回来！');
 				return redirect()->route('users.index');
 			}
-			else
 			{
-				session()->flash('error', '很抱歉，您的邮箱和密码不匹配');
+				session()->flash('info', '正在审核，请耐心等待管理员审核');
+				Auth::logout();
 				return redirect()->back();
 			}
 		}
+		else
 		{
-			session()->flash('info', '正在审核，请耐心等待管理员审核');
+			session()->flash('error', '很抱歉，您的邮箱和密码不匹配');
 			return redirect()->back();
 		}
 	}

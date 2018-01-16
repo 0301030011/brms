@@ -190,45 +190,52 @@ $(document).ready(function()
 		var chapter;
 		var section;
 		var items=$('#add-box').children();
-		for (var i = 0; i <items.length; i++)
+		if (items.length>0)/*array if is null it will not sent*/
 		{
-			if(items.eq(0).hasClass('section'))
+			for (var i = 0; i <items.length; i++)
 			{
-				toastr.error('节必须存在于章下');
-				return;
-			}
-			if(items.eq(items.length-1).hasClass('chapter'))
-			{
-				toastr.error('不能含有空章节');
-				return;
-			}
-			var item=items.eq(i);
-			if (item.attr('itemname')==null)
-			{
-				toastr.error('请完善目录');
-				return;
-			}
-			if (item.hasClass('chapter'))
-			{
-				chapter=[];
-				chapter.push(item.attr('itemname'));
-				if (item.next().hasClass('chapter'))
+				if(items.eq(0).hasClass('section'))
+				{
+					toastr.error('节必须存在于章下');
+					return;
+				}
+				if(items.eq(items.length-1).hasClass('chapter'))
 				{
 					toastr.error('不能含有空章节');
+					return;
 				}
-			}
-			if (item.hasClass('section'))
-			{
-				section=[];
-				section.push(item.attr('itemname'));
-				section.push(item.attr('resourcename'));
-				section.push(item.attr('resourcepath'));
-				chapter.push(section);
-				if (item.next().hasClass('chapter')||i==items.length-1)
+				var item=items.eq(i);
+				if (item.attr('itemname')==null)
 				{
-					menu.push(chapter);
+					toastr.error('请完善目录');
+					return;
+				}
+				if (item.hasClass('chapter'))
+				{
+					chapter=[];
+					chapter.push(item.attr('itemname'));
+					if (item.next().hasClass('chapter'))
+					{
+						toastr.error('不能含有空章节');
+					}
+				}
+				if (item.hasClass('section'))
+				{
+					section=[];
+					section.push(item.attr('itemname'));
+					section.push(item.attr('resourcename'));
+					section.push(item.attr('resourcepath'));
+					chapter.push(section);
+					if (item.next().hasClass('chapter')||i==items.length-1)
+					{
+						menu.push(chapter);
+					}
 				}
 			}
+		}
+		else
+		{
+			menu=null;
 		}
 		var url=window.location.href.slice(0,-5);
 		$.ajax({
@@ -253,11 +260,18 @@ $(document).ready(function()
 				success: function (data)
 				{
 					$('#resources').empty();
-					var resources=data.data;
-					for(var i=0;i<resources.length;i++)
+					if(data.data!='')
 					{
-						var resource=resources[i];
-						$('#resources').append('<div class="resource" path="'+resource.path+'"><div class="name pull-left">'+resource.name+'</div><div class="type pull-left" >'+resource.type+'</div><div class="date pull-right">'+resource.updated_at+'</div></div>');
+						var resources=data.data;
+						for(var i=0;i<resources.length;i++)
+						{
+							var resource=resources[i];
+							$('#resources').append('<div class="resource" path="'+resource.path+'"><div class="name pull-left">'+resource.name+'</div><div class="type pull-left" >'+resource.type+'</div><div class="date pull-right">'+resource.updated_at+'</div></div>');
+						}
+					}
+					else
+					{
+						toastr.warning('未找到'+name+'相关资源!');
 					}
 				},
 				dataType:"JSON"

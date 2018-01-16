@@ -15,12 +15,6 @@ class ResourcesController extends Controller
 		if ($request->has('ajax'))
 		{
 			$resources=Resource::where('name','like','%'.$name.'%')->orderBy('created_at', 'desc')->paginate(16);
-			/*未查询到结果*/
-			// if (count($resources) < 1 and $name)
-			// {
-			// 	session()->flash('warning', '未找到名称为 '.$name.' 的资源!');
-			// 	return redirect()->route('resources.index');
-			// }
 			return $resources;
 		}
 		else
