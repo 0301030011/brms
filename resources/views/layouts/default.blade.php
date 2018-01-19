@@ -15,7 +15,7 @@
 @yield('content')
 <script src="{{ URL::asset('/js/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('/js/toastr.min.js') }}"></script>
-<script src="{{ URL::asset('/js/default.js') }}"></script>
+<script src="{{ URL::asset('/js/index.js') }}"></script>
 @include('layouts.messages')
 </body>
 </html>

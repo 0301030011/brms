@@ -38,4 +38,4 @@ Route::resource('books', 'BooksController');
 Route::post('qrcode/create','QrcodesController@create');
 
 /*Mobile view*/
-Route::resource('book', 'BookContoller');
+Route::resource('mobile', 'MobileController');

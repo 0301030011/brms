@@ -24,8 +24,9 @@ class QrcodesController extends Controller
 				$sectionname=$value[$i][0];
 				$sectionresourcename=$value[$i][1];
 				$sectionresourcepath=$value[$i][2];
+				$src=route('mobile.index').'?id='.$id.'&src='.$sectionresourcepath;
 				// Change can use to review in livingview
-				QrCode::size(200)->generate($sectionresourcepath, public_path('storage/qrcodes/'.$sectionname.'.svg'));
+				QrCode::size(200)->generate($src, public_path('storage/qrcodes/'.$sectionname.'.svg'));
 				$filelist[]=$sectionname.'.svg';
 			}
 		}

@@ -33,7 +33,7 @@ class SessionsController extends Controller
 			{
 				$name=Auth::user()->name;
 				session()->flash('success', $name.' 欢迎回来！');
-				return redirect()->route('users.index');
+				return redirect()->route('books.index');
 			}
 			{
 				session()->flash('info', '正在审核，请耐心等待管理员审核');
