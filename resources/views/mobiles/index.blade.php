@@ -3,41 +3,37 @@
 <head>
 	<meta charset="UTF-8">
 	<title>{{ $book->name }}</title>
-	<link rel="stylesheet" href="{{ URL::asset('/css/mui.min.css') }}">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{{ URL::asset('/css/drawer.min.css') }}">
 </head>
-<body>
+<body class="drawer drawer--left drawer--sidebar">
 	<menu style="display: none;">{{ $book->menu }}</menu>
-	<!-- 侧滑导航根容器 -->
-	<div class="mui-off-canvas-wrap mui-draggable">
-		<!-- 菜单容器 -->
-		<aside class="mui-off-canvas-left">
-			<div class="mui-scroll-wrapper">
-				<div class="mui-scroll">
-				<!-- 菜单具体展示内容 -->
-				<header class="mui-bar mui-bar-nav" style="position: static !important;">
-					<h1 class="mui-title">目录</h1>
-				</header>
-					<ul class="mui-table-view" id="menu">
-					</ul>
-				</div>
-			</div>
-		</aside>
-		<!-- 主页面容器 -->
-		<div class="mui-inner-wrap">
-			<!-- 主页面标题 -->
-			<header class="mui-bar mui-bar-nav">
-				<a class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
-				<h1 class="mui-title">{{ $book->name }}</h1>
-			</header>
-			<div class="mui-content mui-scroll-wrapper">
-				<div class="mui-scroll">
-					<iframe id="screen" src="https://view.officeapps.live.com/op/embed.aspx?src={{ $src }}" style="width:100%; height:660px; border: none;"></iframe>
-				</div>
-			</div>
-		</div>
-	</div>
+	<header role="banner">
+	  <button type="button" class="drawer-toggle drawer-hamburger">
+	    <span class="drawer-hamburger-icon"></span>
+	  </button>
+
+	  <nav class="drawer-nav" role="navigation">
+	    <ul class="drawer-menu">
+	      <li><a class="drawer-brand">目录</a></li>
+	    </ul>
+	  </nav>
+	</header>
+
+	<!-- content -->
+	<main role="main" class="drawer-contents">
+	  <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{ $src }}" style="width:100%; height:660px; border: none;"></iframe>
+	</main>
 	<script src="{{ URL::asset('/js/jquery.min.js') }}"></script>
-	<script src="{{ URL::asset('/js/mui.min.js') }}"></script>
+	<script src="{{ URL::asset('/js/bootstrap.min.js') }}"></script>
+	<script src="{{ URL::asset('/js/iscroll.js') }}"></script>
+	<script src="{{ URL::asset('/js/drawer.min.js') }}"></script>
 	<script src="{{ URL::asset('/js/mobile.js') }}"></script>
+	<script>
+	  $(document).ready(function() {
+	    $('.drawer').drawer();
+	  });
+	</script>
 </body>
 </html>

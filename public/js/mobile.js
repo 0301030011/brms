@@ -9,31 +9,28 @@ $(document).ready(function()
 			{
 				var chapter=menu[m];
 				var chapterName=chapter[0];
-				$('#menu').append('<li class="mui-table-view-cell">'+chapterName+'</li>');
+				var chapter_name='<span class="drawer-menu-item" data-toggle="dropdown" role="button" aria-expanded="false">'+chapterName+'<span class="drawer-caret"></span></span>';
+				var section_name='';
 				for(var i=1;i<chapter.length;i++)
 				{
 					var section=chapter[i];
 					var sectionName=chapter[i][0];
 					var sectionResourceName=chapter[i][1];
 					var sectionResourcePath=chapter[i][2];
-					$('#menu').append('<li class="mui-table-view-cell section" resourcepath='+sectionResourcePath+'><a class="mui-navigate-right">'+sectionResourceName+'</a></li>');
+					section_name+='<li><span class="drawer-dropdown-menu-item" resourcepath='+sectionResourcePath+'>'+sectionResourceName+'</span></li>';
 				}
+				var section_item='<ul class="drawer-dropdown-menu">'+section_name+'</li>';
+				var chapter_item='<li class="drawer-dropdown">'+chapter_name+section_item+'</li>';
+				$('.drawer-menu').append(chapter_item);
 			}
 		}
 	}();
-	$('iframe').height($(window).height()-40);
-	$('.mui-inner-wrap').on('drag', function(event) {
-	event.stopPropagation();
-	});
-	$('.mui-inner-wrap').on('click', function(event) {
+	$('iframe').height($(window).height());
+	$('.drawer-dropdown-menu-item').on('click', function(event) {
 		event.preventDefault();
-		/* Act on the event */
-		mui('.mui-off-canvas-wrap').offCanvas().show();
-	});
-	$('.section').on('click', function(event) {
-		event.preventDefault();
-		var src='https://view.officeapps.live.com/op/embed.aspx?src='+$(this).attr('resourcepath');
-		$('#screen').attr('src', src);
-		mui('.mui-off-canvas-wrap').offCanvas().close();
+		var resourcepath=$(this).attr('resourcepath');
+		var src='https://view.officeapps.live.com/op/embed.aspx?src='+resourcepath;
+		$('iframe').attr('src', src);
+		$('.drawer').drawer('close');
 	});
 });
